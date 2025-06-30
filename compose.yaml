@@ -1,0 +1,13 @@
+
+services:
+  ketcher:
+    # image: ketcher
+    build: ./ketcher
+    restart: unless-stopped
+    
+  cloudflare:
+    # Usally best practise to avoid 'latest', but Cloudflare tunnels maintain a relatively stable API and prefer to get the latest version for security purposes.
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    env_file: .env
+    command: ["tunnel", "--no-autoupdate", "run"]
